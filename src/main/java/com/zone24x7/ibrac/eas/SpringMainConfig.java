@@ -7,12 +7,13 @@ import com.zone24x7.ibrac.eas.formaters.RequestFormatter;
 import com.zone24x7.ibrac.eas.processors.DefaultPreProcessor;
 import com.zone24x7.ibrac.eas.processors.PreProcessor;
 import com.zone24x7.ibrac.eas.util.StringConstants;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Class to represent the spring main configurations and bindings.
@@ -62,5 +63,23 @@ public class SpringMainConfig {
         preProcessorMap.put(null, defaultPreProcessor);
         preProcessorMap.put(StringConstants.DEFAULT_KEY, defaultPreProcessor);
         return preProcessorMap;
+    }
+
+    /**
+     * Method to provide the whitelisted topic list
+     *
+     * @param whitelistedTopicsConfiguration Configuration string for whitelisted topic list
+     * @return whitelistedTopicsList
+     */
+    @Bean
+    @Qualifier("whitelistedTopicList")
+    public List<String> provideWhitelistedTopicList(@Value("${eas.whitelisted.topics}") String whitelistedTopicsConfiguration) {
+        List<String> whitelistedTopicList = new LinkedList<>();
+
+        if (StringUtils.isNotEmpty(whitelistedTopicsConfiguration)) {
+            whitelistedTopicList.addAll(Arrays.asList(whitelistedTopicsConfiguration.trim().split("\\s*,\\s*")));
+        }
+
+        return whitelistedTopicList;
     }
 }

@@ -1,11 +1,16 @@
 package com.zone24x7.ibrac.eas.controller;
 
 import com.zone24x7.ibrac.eas.pojo.EventInputParams;
+import com.zone24x7.ibrac.eas.util.StringConstants;
+import com.zone24x7.ibrac.eas.util.TopicValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -15,6 +20,9 @@ import java.util.UUID;
 @RestController
 public class EventController {
     private static final Logger LOGGER = LoggerFactory.getLogger(EventController.class);
+
+    @Autowired
+    private TopicValidator topicValidator;
 
     /**
      * Method to get a Unique Correlation ID.
@@ -29,12 +37,18 @@ public class EventController {
     /**
      * Method to send tracking data into the messaging platform
      *
-     * @return HTTP Status 204 no content if the request is submitted. HTTP status 415 if the POST body is missing.
+     * @return HTTP Status 204 no content if the request is submitted. HTTP status 415 if the POST body is missing. HTTP status 404 if the topic is not found.
      */
     @PostMapping(path = "/eas/v1/topics/{topic}", consumes = {"application/json", "text/plain"})
-    public ResponseEntity<Object> sendTrackingData(@PathVariable("topic") String topic, @RequestHeader("content-type") String contentType, @RequestBody String requestBody) {
+    public ResponseEntity<Object> sendTrackingData(@PathVariable("topic") String topic, @RequestHeader("Content-type") String contentType, @RequestBody String requestBody) {
         String requestId = MDC.get("correlationId");
-        EventInputParams eventInputParams = new EventInputParams(requestId, topic, requestBody, contentType);
-        return ResponseEntity.noContent().build();
+
+        if (topicValidator.validate(topic)) {
+            EventInputParams eventInputParams = new EventInputParams(requestId, topic, requestBody, contentType);
+            return ResponseEntity.noContent().build();
+        } else {
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Topic not supported: {}", requestId, topic);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, Topic Not Found");
+        }
     }
 }
