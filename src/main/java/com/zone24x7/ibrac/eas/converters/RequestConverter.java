@@ -1,7 +1,7 @@
 package com.zone24x7.ibrac.eas.converters;
 
 /**
- * RequestConverter interface
+ * Interface to represent the request converter.
  */
 public interface RequestConverter {
 }
