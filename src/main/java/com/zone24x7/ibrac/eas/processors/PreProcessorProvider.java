@@ -4,12 +4,14 @@ import com.zone24x7.ibrac.eas.TopicConfig;
 import com.zone24x7.ibrac.eas.util.AppConfigStringConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 /**
  * Class to represent the pre processor provider.
  */
+@Component
 public class PreProcessorProvider {
     @Autowired
     @Qualifier("preProcessorMap")

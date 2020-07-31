@@ -1,6 +1,7 @@
 package com.zone24x7.ibrac.eas.controller;
 
 import com.zone24x7.ibrac.eas.pojo.EventInputParams;
+import com.zone24x7.ibrac.eas.requesthandlers.EventRequestHandler;
 import com.zone24x7.ibrac.eas.util.StringConstants;
 import com.zone24x7.ibrac.eas.util.TopicValidator;
 import org.slf4j.Logger;
@@ -24,6 +25,9 @@ public class EventController {
     @Autowired
     private TopicValidator topicValidator;
 
+    @Autowired
+    private EventRequestHandler eventRequestHandler;
+
     /**
      * Method to get a Unique Correlation ID.
      *
@@ -45,6 +49,7 @@ public class EventController {
 
         if (topicValidator.validate(topic)) {
             EventInputParams eventInputParams = new EventInputParams(requestId, topic, requestBody, contentType);
+            eventRequestHandler.method(eventInputParams);
             return ResponseEntity.noContent().build();
         } else {
             LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Topic not supported: {}", requestId, topic);
