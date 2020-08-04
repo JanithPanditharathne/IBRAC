@@ -29,7 +29,7 @@ public class EventRequestHandler implements RequestHandler {
      *
      * @param eventInputParams Input parameters object sent from the controller class
      */
-    public String method(EventInputParams eventInputParams) {
+    public String handleRequest(EventInputParams eventInputParams) {
         RequestConverter requestConverter = requestConverterProvider.get(eventInputParams.getTopic());
         String convertedString = requestConverter.convert(eventInputParams.getEventData());
 
