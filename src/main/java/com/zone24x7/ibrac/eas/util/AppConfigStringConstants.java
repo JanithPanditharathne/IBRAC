@@ -5,10 +5,12 @@ package com.zone24x7.ibrac.eas.util;
  */
 public final class AppConfigStringConstants {
 
+    public static final String BOOTSTRAP_SERVER_IP = "eas.bootstrap.server.ip";
     public static final String CONFIG_TOPIC_PREFIX = "eas.topics";
     public static final String CONFIG_TOPIC_CONVERTER = ".converter";
     public static final String CONFIG_TOPIC_PREPROCESSOR = ".preprocessor";
     public static final String CONFIG_TOPIC_FORMATTER = ".formatter";
+
 
     /**
      * Private constructor to stop initiation
