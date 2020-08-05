@@ -1,5 +1,7 @@
 package com.zone24x7.ibrac.eas.formaters;
 
+import com.zone24x7.ibrac.eas.pojo.EventInputParams;
+import com.zone24x7.ibrac.eas.util.StringConstants;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,11 +13,11 @@ public class DefaultRequestFormatter implements RequestFormatter {
     /**
      * Method to format the request body.
      *
-     * @param requestBody request body as a string.
-     * @return formatted request body as a string.
+     * @param eventInputParams pojo object of eventInputParams..
+     * @return EventInputParams params object with the changes.
      */
     @Override
-    public String format(String requestBody) {
-        return requestBody;
+    public EventInputParams format(EventInputParams eventInputParams) {
+        return eventInputParams;
     }
 }

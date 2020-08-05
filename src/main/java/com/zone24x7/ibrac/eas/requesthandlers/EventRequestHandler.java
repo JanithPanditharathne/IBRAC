@@ -10,6 +10,8 @@ import com.zone24x7.ibrac.eas.processors.PreProcessorProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+
 /**
  * Default EventRequestHandler
  */
@@ -29,16 +31,17 @@ public class EventRequestHandler implements RequestHandler {
      *
      * @param eventInputParams Input parameters object sent from the controller class
      */
-    public String handleRequest(EventInputParams eventInputParams) {
+    @Override
+    public String handleRequest(EventInputParams eventInputParams) throws IOException {
         RequestConverter requestConverter = requestConverterProvider.get(eventInputParams.getTopic());
-        String convertedString = requestConverter.convert(eventInputParams.getEventData());
+        eventInputParams = requestConverter.convert(eventInputParams);
 
         RequestFormatter requestFormatter = requestFormatterProvider.get(eventInputParams.getTopic());
-        String formattedString = requestFormatter.format(convertedString);
+        eventInputParams = requestFormatter.format(eventInputParams);
 
         PreProcessor preProcessor = preProcessorProvider.get(eventInputParams.getTopic());
-        String processedString = preProcessor.process(formattedString);
+        eventInputParams = preProcessor.process(eventInputParams);
 
-        return processedString;
+        return eventInputParams.getEventData();
     }
 }

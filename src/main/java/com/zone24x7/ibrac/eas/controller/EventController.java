@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.UUID;
 
 /**
@@ -49,19 +50,25 @@ public class EventController {
      */
     @PostMapping(path = "/eas/v1/topics/{topic}", consumes = {"application/json", "text/plain"})
     public ResponseEntity<Object> sendTrackingData(@PathVariable("topic") String topic, @RequestHeader("Content-type") String contentType, @RequestBody String requestBody) {
+
         String requestId = MDC.get("correlationId");
+        EventInputParams eventInputParams = new EventInputParams(requestId, topic, requestBody, contentType);
 
-        if (topicValidator.validate(topic)) {
-            EventInputParams eventInputParams = new EventInputParams(requestId, topic, requestBody, contentType);
+        try {
+            if (topicValidator.validate(topic)) {
 
-            //eventRequestHandler.method(eventInputParams);
+                eventRequestHandler.handleRequest(eventInputParams);
 
-            kafkaEventPublisher.publishToTopic(topic,requestBody,requestId);
+                kafkaEventPublisher.publishToTopic(eventInputParams);
 
-            return ResponseEntity.noContent().build();
-        } else {
-            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Topic not supported: {}", requestId, topic);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, Topic Not Found");
+                return ResponseEntity.noContent().build();
+            } else {
+                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Topic not supported: {}", requestId, topic);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, Topic Not Found");
+            }
+        } catch (IOException ioException){
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Json parsing error: {}", requestId, eventInputParams.getEventData());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error, Json parsing error");
         }
     }
 }
