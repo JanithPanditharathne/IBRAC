@@ -7,6 +7,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
@@ -28,6 +29,9 @@ public class KafkaEventPublisher implements EventPublisher {
 
     //@Autowired
     private KafkaTemplate<String, Object> template;
+
+    @Value("${eas.bootstrap.server.ip}")
+    private String bootstrapServeIp;
 
     /**
      * Publish the given message to the given kafka topic.
@@ -55,9 +59,13 @@ public class KafkaEventPublisher implements EventPublisher {
         });
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "10.101.16.86:9096");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServeIp);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         return props;

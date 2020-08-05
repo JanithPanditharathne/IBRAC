@@ -16,7 +16,7 @@ public class DefaultRequestConverter implements RequestConverter {
      * Method to convert the request body.
      *
      * @param eventInputParams pojo object of eventInputParams.
-     * @return the converted string.
+     * @return eventInputParams with the converted string.
      */
     @Override
     public EventInputParams convert(EventInputParams eventInputParams) {

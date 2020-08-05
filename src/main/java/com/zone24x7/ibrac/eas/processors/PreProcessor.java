@@ -9,5 +9,11 @@ import java.io.IOException;
  */
 public interface PreProcessor {
 
+    /**
+     * Method to process the request body.
+     *
+     * @param eventInputParams eventInputParams pojo object.
+     * @return processed request body enclosed with eventInputParams object.
+     */
     EventInputParams process(EventInputParams eventInputParams) throws IOException;
 }

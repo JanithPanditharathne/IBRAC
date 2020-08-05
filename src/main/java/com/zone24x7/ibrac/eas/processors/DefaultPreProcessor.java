@@ -19,7 +19,7 @@ public class DefaultPreProcessor implements PreProcessor {
      * Method to process the request body.
      *
      * @param eventInputParams eventInputParams pojo object.
-     * @return processed request body as a string.
+     * @return processed request body enclosed with eventInputParams object.
      */
     @Override
     public EventInputParams process(EventInputParams eventInputParams) throws IOException {
@@ -30,7 +30,7 @@ public class DefaultPreProcessor implements PreProcessor {
 
             EventJson eventJson = JsonPojoConverter.toPojo(eventData, EventJson.class);
             eventJson.setEasTimestamp(new Date().toString());
-            eventInputParams.setEventData(eventJson.toString());
+            eventInputParams.setEventData(JsonPojoConverter.toJson(eventJson).toString());
 
         } else {
             eventData = StringConstants.SOH + new Date().toString() + StringConstants.SOT + eventData;
