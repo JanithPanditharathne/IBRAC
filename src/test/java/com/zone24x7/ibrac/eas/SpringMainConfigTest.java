@@ -1,10 +1,20 @@
 package com.zone24x7.ibrac.eas;
 
+import com.zone24x7.ibrac.eas.converters.DefaultRequestConverter;
+import com.zone24x7.ibrac.eas.converters.RequestConverter;
+import com.zone24x7.ibrac.eas.formaters.DefaultRequestFormatter;
+import com.zone24x7.ibrac.eas.formaters.RequestFormatter;
+import com.zone24x7.ibrac.eas.processors.DefaultPreProcessor;
+import com.zone24x7.ibrac.eas.processors.PreProcessor;
+import com.zone24x7.ibrac.eas.util.StringConstants;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 
 class SpringMainConfigTest {
@@ -48,4 +58,47 @@ class SpringMainConfigTest {
         List<String> listOfWhitelistedTopics = springMainConfig.provideWhitelistedTopicList(" rectrack , topic1 , topic2 ");
         assertThat(listOfWhitelistedTopics, hasItems("rectrack", "topic1", "topic2"));
     }
+
+    /**
+     * Test to verify that the method returns the valid hashmap of request converters.
+     */
+    @Test
+    public void should_return_default_request_converter_map_when_called() {
+        SpringMainConfig springMainConfig = new SpringMainConfig();
+        DefaultRequestConverter defaultRequestConverter = new DefaultRequestConverter();
+        Map<String, RequestConverter> returnedRequestConverterMap = springMainConfig.provideRequestConverterMap(defaultRequestConverter);
+        Map<String, RequestConverter> requestConverterMap = new HashMap<>();
+        requestConverterMap.put(null, defaultRequestConverter);
+        requestConverterMap.put(StringConstants.DEFAULT_KEY, defaultRequestConverter);
+        assertThat(returnedRequestConverterMap, equalTo(requestConverterMap));
+    }
+
+    /**
+     * Test to verify that the method returns the valid hashmap of request formatters.
+     */
+    @Test
+    public void should_return_default_request_formatter_map_when_called() {
+        SpringMainConfig springMainConfig = new SpringMainConfig();
+        DefaultRequestFormatter defaultRequestFormatter = new DefaultRequestFormatter();
+        Map<String, RequestFormatter> returnedRequestConverterMap = springMainConfig.provideRequestFormatterMap(defaultRequestFormatter);
+        Map<String, RequestFormatter> requestFormatterMap = new HashMap<>();
+        requestFormatterMap.put(null, defaultRequestFormatter);
+        requestFormatterMap.put(StringConstants.DEFAULT_KEY, defaultRequestFormatter);
+        assertThat(returnedRequestConverterMap, equalTo(requestFormatterMap));
+    }
+
+    /**
+     * Test to verify that the method returns the valid hashmap of pre processors.
+     */
+    @Test
+    public void should_return_default_preprocessor_map_when_called() {
+        SpringMainConfig springMainConfig = new SpringMainConfig();
+        DefaultPreProcessor defaultPreProcessor = new DefaultPreProcessor();
+        Map<String, PreProcessor> returnedPreProcessorMap = springMainConfig.providePreProcessorMap(defaultPreProcessor);
+        Map<String, PreProcessor> preProcessorMap = new HashMap<>();
+        preProcessorMap.put(null, defaultPreProcessor);
+        preProcessorMap.put(StringConstants.DEFAULT_KEY, defaultPreProcessor);
+        assertThat(returnedPreProcessorMap, equalTo(preProcessorMap));
+    }
+
 }
