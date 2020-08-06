@@ -1,7 +1,7 @@
 package com.zone24x7.ibrac.eas.converters;
 
 import com.zone24x7.ibrac.eas.pojo.EventInputParams;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.MDC;
 
 import static org.hamcrest.MatcherAssert.assertThat;

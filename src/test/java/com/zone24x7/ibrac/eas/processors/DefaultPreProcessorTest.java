@@ -2,7 +2,7 @@ package com.zone24x7.ibrac.eas.processors;
 
 import com.zone24x7.ibrac.eas.pojo.EventInputParams;
 import com.zone24x7.ibrac.eas.util.StringConstants;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.MDC;
 
 import java.io.IOException;
