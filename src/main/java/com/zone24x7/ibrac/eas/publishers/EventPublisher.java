@@ -3,7 +3,7 @@ package com.zone24x7.ibrac.eas.publishers;
 import com.zone24x7.ibrac.eas.pojo.EventInputParams;
 
 /**
- * Publisher interface
+ * Event publisher interface
  */
 public interface EventPublisher {
 

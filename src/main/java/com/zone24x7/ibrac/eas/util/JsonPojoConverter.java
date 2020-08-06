@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -72,5 +73,9 @@ public class JsonPojoConverter {
      */
     public static <T> T toPojo(String inputNode, TypeReference<T> typeReference) throws IOException {
         return mapper.readValue(inputNode, typeReference);
+    }
+
+    public static <T> List<T> toList(T pojo) {
+        return mapper.convertValue(pojo, new TypeReference<List<T>>() {});
     }
 }

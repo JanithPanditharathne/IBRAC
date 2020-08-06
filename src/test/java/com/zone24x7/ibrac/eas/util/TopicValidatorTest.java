@@ -11,7 +11,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 class TopicValidatorTest {
-    TopicValidator topicValidator;
+
+    private TopicValidator topicValidator;
+
 
     @BeforeEach
     void setup() {

@@ -1,5 +1,6 @@
 package com.zone24x7.ibrac.eas.processors;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.zone24x7.ibrac.eas.pojo.EventInputParams;
 import com.zone24x7.ibrac.eas.pojo.EventJson;
 import com.zone24x7.ibrac.eas.util.JsonPojoConverter;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Implementation class of the pre processor to represent the default pre processor.
@@ -28,9 +30,13 @@ public class DefaultPreProcessor implements PreProcessor {
 
         if(eventInputParams.getContentType().equals(StringConstants.APPLICATION_JSON)){
 
-            EventJson eventJson = JsonPojoConverter.toPojo(eventData, EventJson.class);
-            eventJson.setEasTimestamp(new Date().toString());
-            eventInputParams.setEventData(JsonPojoConverter.toJson(eventJson).toString());
+            List<EventJson> eventJsonList = JsonPojoConverter.toPojo(eventData, new TypeReference<List<EventJson>>() {});
+
+            for(EventJson eventJson : eventJsonList){
+                eventJson.setEasTimestamp(new Date().toString());
+            }
+
+            eventInputParams.setEventData(JsonPojoConverter.toJson(eventJsonList).toString());
 
         } else {
             eventData = StringConstants.SOH + new Date().toString() + StringConstants.SOT + eventData;

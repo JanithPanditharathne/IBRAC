@@ -6,7 +6,6 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -20,15 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Kafka publisher
+ * Kafka event publisher
  */
 @Component
 public class KafkaEventPublisher implements EventPublisher {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaEventPublisher.class);
-
-    //@Autowired
-    private KafkaTemplate<String, Object> template;
 
     @Value("${eas.bootstrap.server.ip}")
     private String bootstrapServeIp;
@@ -42,9 +38,9 @@ public class KafkaEventPublisher implements EventPublisher {
     @Override
     public void publishToTopic(EventInputParams eventInputParams) {
 
-        template = new KafkaTemplate<String, Object>(producerFactory());
+        KafkaTemplate<String, Object> template = new KafkaTemplate<>(producerFactory());
 
-        ListenableFuture<SendResult<String, Object>> future = this.template.send(eventInputParams.getTopic(), eventInputParams.getEventData());
+        ListenableFuture<SendResult<String, Object>> future = template.send(eventInputParams.getTopic(), eventInputParams.getEventData());
 
         future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
             @Override
@@ -63,7 +59,7 @@ public class KafkaEventPublisher implements EventPublisher {
      *
      * @return
      */
-    public Map<String, Object> producerConfigs() {
+    private Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServeIp);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -71,7 +67,7 @@ public class KafkaEventPublisher implements EventPublisher {
         return props;
     }
 
-    public ProducerFactory<String, Object> producerFactory() {
+    private ProducerFactory<String, Object> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 }

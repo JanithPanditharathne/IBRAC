@@ -32,7 +32,7 @@ public class EventRequestHandler implements RequestHandler {
      * @param eventInputParams Input parameters object sent from the controller class
      */
     @Override
-    public String handleRequest(EventInputParams eventInputParams) throws IOException {
+    public String handleRequest( EventInputParams eventInputParams) throws IOException {
         RequestConverter requestConverter = requestConverterProvider.get(eventInputParams.getTopic());
         eventInputParams = requestConverter.convert(eventInputParams);
 
