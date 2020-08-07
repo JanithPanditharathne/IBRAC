@@ -9,15 +9,13 @@ import com.zone24x7.ibrac.eas.processors.PreProcessor;
 import com.zone24x7.ibrac.eas.util.StringConstants;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
 
 class SpringMainConfigTest {
+    private final List<String> whiteListedTopicsList = new ArrayList<>(Arrays.asList("rectrack", "topic1", "topic2"));
 
     /**
      * Test to verify that the method returns a valid list for a valid string with topics.
@@ -26,7 +24,7 @@ class SpringMainConfigTest {
     public void should_return_correctlist_when_passing_validtopics() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         List<String> listOfWhitelistedTopics = springMainConfig.provideWhitelistedTopicList("rectrack,topic1,topic2");
-        assertThat(listOfWhitelistedTopics, hasItems("rectrack", "topic1", "topic2"));
+        assertThat(listOfWhitelistedTopics, equalTo(whiteListedTopicsList));
     }
 
     /**
@@ -36,7 +34,7 @@ class SpringMainConfigTest {
     public void should_return_list_of_items_without_spaces_when_passing_topics_with_spaces_in_front() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         List<String> listOfWhitelistedTopics = springMainConfig.provideWhitelistedTopicList(" rectrack, topic1, topic2");
-        assertThat(listOfWhitelistedTopics, hasItems("rectrack", "topic1", "topic2"));
+        assertThat(listOfWhitelistedTopics, equalTo(whiteListedTopicsList));
     }
 
     /**
@@ -46,7 +44,7 @@ class SpringMainConfigTest {
     public void should_return_list_of_items_without_spaces_when_passing_topics_with_spaces_in_back() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         List<String> listOfWhitelistedTopics = springMainConfig.provideWhitelistedTopicList("rectrack ,topic1 ,topic2 ");
-        assertThat(listOfWhitelistedTopics, hasItems("rectrack", "topic1", "topic2"));
+        assertThat(listOfWhitelistedTopics, equalTo(whiteListedTopicsList));
     }
 
     /**
@@ -56,7 +54,7 @@ class SpringMainConfigTest {
     public void should_return_list_of_items_without_spaces_when_passing_topics_with_spaces_on_both_sides() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         List<String> listOfWhitelistedTopics = springMainConfig.provideWhitelistedTopicList(" rectrack , topic1 , topic2 ");
-        assertThat(listOfWhitelistedTopics, hasItems("rectrack", "topic1", "topic2"));
+        assertThat(listOfWhitelistedTopics, equalTo(whiteListedTopicsList));
     }
 
     /**
