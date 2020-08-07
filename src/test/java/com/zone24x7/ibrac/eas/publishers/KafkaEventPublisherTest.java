@@ -11,6 +11,7 @@ import org.mockito.BDDMockito;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
@@ -34,6 +35,7 @@ public class KafkaEventPublisherTest {
     private String topicName = "rectrack";
     private String eventData = "request";
     private String requestId = "12345";
+    private String bootstrapServeIp = "10.101.16.86:9096";
 
     /**
      * Method to setup the dependencies for the test class
@@ -47,6 +49,8 @@ public class KafkaEventPublisherTest {
         template = mock(KafkaTemplate.class);
         listenableFuture = mock(ListenableFuture.class);
         defaultKafkaProducerFactory = mock(DefaultKafkaProducerFactory.class);
+
+        ReflectionTestUtils.setField(kafkaEventPublisher, "bootstrapServeIp", bootstrapServeIp);
     }
 
     /**
@@ -56,28 +60,28 @@ public class KafkaEventPublisherTest {
     @Test
     public void should_publish_the_message_when_valid_topic_and_valid_message_passed(){
 
-//        when(template.send(topicName,eventData)).thenReturn(listenableFuture);
-//        kafkaEventPublisher.publishToTopic(eventInputParams);
+        when(template.send(topicName,eventData)).thenReturn(listenableFuture);
+        //kafkaEventPublisher.publishToTopic(eventInputParams);
 
-//        long offset = 1;
-//        int partition = 1;
-//
-//
-//        SendResult<String, Object> sendResult = mock(SendResult.class);
-//        ListenableFuture<SendResult<String, Object>> responseFuture = mock(ListenableFuture.class);
-//        //RecordMetadata recordMetadata = new RecordMetadata(new TopicPartition(topic, partition), offset, 0L, 0L, 0L, 0, 0);
-//
-//        //BDDMockito.given(sendResult.getRecordMetadata()).willReturn(recordMetadata);
-//        when(template.send(topicName, eventData)).thenReturn(responseFuture);
-//        doAnswer(invocationOnMock -> {
-//            ListenableFutureCallback listenableFutureCallback = invocationOnMock.getArgument(0);
-//            listenableFutureCallback.onSuccess(sendResult);
-//            assertThat(sendResult.getRecordMetadata().offset(), Matchers.is(offset));
-//            assertThat(sendResult.getRecordMetadata().partition(), Matchers.is(partition));
-//            return null;
-//        }).when(responseFuture).addCallback(any(ListenableFutureCallback.class));
-//
-//        kafkaEventPublisher.publishToTopic(eventInputParams);
+        long offset = 1;
+        int partition = 1;
+
+
+        SendResult<String, Object> sendResult = mock(SendResult.class);
+        ListenableFuture<SendResult<String, Object>> responseFuture = mock(ListenableFuture.class);
+        //RecordMetadata recordMetadata = new RecordMetadata(new TopicPartition(topic, partition), offset, 0L, 0L, 0L, 0, 0);
+
+        //BDDMockito.given(sendResult.getRecordMetadata()).willReturn(recordMetadata);
+        when(template.send(topicName, eventData)).thenReturn(responseFuture);
+        doAnswer(invocationOnMock -> {
+            ListenableFutureCallback listenableFutureCallback = invocationOnMock.getArgument(0);
+            listenableFutureCallback.onSuccess(sendResult);
+            assertThat(sendResult.getRecordMetadata().offset(), Matchers.is(offset));
+            assertThat(sendResult.getRecordMetadata().partition(), Matchers.is(partition));
+            return null;
+        }).when(responseFuture).addCallback(any(ListenableFutureCallback.class));
+
+        kafkaEventPublisher.publishToTopic(eventInputParams);
 
         //verify(kafkaTemplate, times(1)).send(topic, key, siebelRecord);
     }
