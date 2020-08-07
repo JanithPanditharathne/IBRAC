@@ -56,8 +56,9 @@ public class KafkaEventPublisher implements EventPublisher {
     }
 
     /**
+     * Provides the producer config settings
      *
-     * @return
+     * @return Map of producer configs.
      */
     private Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>();
@@ -67,6 +68,11 @@ public class KafkaEventPublisher implements EventPublisher {
         return props;
     }
 
+    /**
+     * Provides the default producer factory
+     *
+     * @return producer factory
+     */
     private ProducerFactory<String, Object> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }

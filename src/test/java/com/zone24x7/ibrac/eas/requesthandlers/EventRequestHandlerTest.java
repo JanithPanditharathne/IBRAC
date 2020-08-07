@@ -1,27 +1,36 @@
 package com.zone24x7.ibrac.eas.requesthandlers;
 
+import com.zone24x7.ibrac.eas.converters.DefaultRequestConverter;
+import com.zone24x7.ibrac.eas.converters.RequestConverter;
 import com.zone24x7.ibrac.eas.converters.RequestConverterProvider;
+import com.zone24x7.ibrac.eas.formaters.DefaultRequestFormatter;
+import com.zone24x7.ibrac.eas.formaters.RequestFormatter;
 import com.zone24x7.ibrac.eas.formaters.RequestFormatterProvider;
 import com.zone24x7.ibrac.eas.pojo.EventInputParams;
+import com.zone24x7.ibrac.eas.processors.DefaultPreProcessor;
+import com.zone24x7.ibrac.eas.processors.PreProcessor;
 import com.zone24x7.ibrac.eas.processors.PreProcessorProvider;
 import com.zone24x7.ibrac.eas.util.StringConstants;
-import com.zone24x7.ibrac.eas.util.TopicValidator;
+import static org.hamcrest.Matchers.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.io.IOException;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class EventRequestHandlerTest {
     private EventRequestHandler eventRequestHandler;
-    private EventInputParams eventInputParams;
-    private TopicValidator topicValidator;
+    private RequestConverter requestConverter;
     private RequestConverterProvider requestConverterProvider;
-    private PreProcessorProvider preProcessorProvider;
+    private EventInputParams eventInputParams;
     private RequestFormatterProvider requestFormatterProvider;
+    private RequestFormatter requestFormatter;
+    private PreProcessorProvider preProcessorProvider;
+    private PreProcessor preprocessor;
 
 
     private final String topicName = "rectrack";
@@ -33,31 +42,38 @@ public class EventRequestHandlerTest {
      */
     @BeforeEach
     void setup() {
-        eventRequestHandler = mock(EventRequestHandler.class);
-        eventInputParams = new EventInputParams(requestId, topicName, request, StringConstants.TEXT_PLAIN);
-        topicValidator = new TopicValidator();
+        eventRequestHandler = new EventRequestHandler();
+        eventInputParams = new EventInputParams(requestId,topicName, request, StringConstants.TEXT_PLAIN);
+
         requestConverterProvider = mock(RequestConverterProvider.class);
         requestFormatterProvider = mock(RequestFormatterProvider.class);
         preProcessorProvider = mock(PreProcessorProvider.class);
 
-        List<String> whitelistedTopicList = new LinkedList<>();
-        whitelistedTopicList.add("rectrack");
-        ReflectionTestUtils.setField(topicValidator, "whiteListedTopicList", whitelistedTopicList);
+        requestConverter = mock(DefaultRequestConverter.class);
+        requestFormatter = mock(DefaultRequestFormatter.class);
+        preprocessor = mock(DefaultPreProcessor.class);
+
+        ReflectionTestUtils.setField(eventRequestHandler, "requestConverterProvider", requestConverterProvider);
+        ReflectionTestUtils.setField(eventRequestHandler, "requestFormatterProvider", requestFormatterProvider);
+        ReflectionTestUtils.setField(eventRequestHandler, "preProcessorProvider", preProcessorProvider);
+
+
     }
 
     /**
      * Test to verify that the topic validator method returns true for an existing topic.
      */
     @Test
-    public void should_return_the_same_string_for_rectrack_topic() {
-        //String output = null;
-        //try {
-        //output = eventRequestHandler.handleRequest(eventInputParams);
-        //System.out.println(output);
-        //} catch (IOException e) {
-        //e.printStackTrace();
-        //}
-        //assertThat(output, is(request));
+    public void should_return_the_same_request_string_for_rectrack_topic() throws IOException {
+
+        when(requestConverterProvider.get(topicName)).thenReturn(requestConverter);
+        when(requestConverter.convert(eventInputParams)).thenReturn(eventInputParams);
+        when(requestFormatterProvider.get(topicName)).thenReturn(requestFormatter);
+        when(requestFormatter.format(eventInputParams)).thenReturn(eventInputParams);
+        when(preProcessorProvider.get(topicName)).thenReturn(preprocessor);
+        when(preprocessor.process(eventInputParams)).thenReturn(eventInputParams);
+        String result = eventRequestHandler.handleRequest(eventInputParams);
+        assertThat(result, is(eventInputParams.getEventData()));
     }
 
 }

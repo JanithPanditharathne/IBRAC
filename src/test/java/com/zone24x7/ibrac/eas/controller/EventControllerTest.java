@@ -76,6 +76,9 @@ public class EventControllerTest {
         assertThat(responseEntity.getBody().toString(), is(notNullValue()));
     }
 
+    /**
+     * Test to verify that the method returns 204 no content on valid post request
+     */
     @Test
     public void should_return_204_no_content_for_valid_post_request_with_valid_parameters() throws IOException {
         when(topicValidator.validate(topicName)).thenReturn(true);
@@ -86,6 +89,9 @@ public class EventControllerTest {
         assertThat(responseEntity.getBody(), is(nullValue()));
     }
 
+    /**
+     * Test to verify that the method returns 500 internal server error when invalid json is passed as the request body
+     */
     @Test
     public void should_return_500_internal_server_error_when_invalid_json_request() throws IOException {
         when(topicValidator.validate(topicName)).thenReturn(true);
@@ -94,11 +100,17 @@ public class EventControllerTest {
         assertThrows(ResponseStatusException.class, () -> eventController.sendTrackingData(topicName, StringConstants.TEXT_PLAIN, request));
     }
 
+    /**
+     * Test to verify that the method returns 415 invalid post request when Invalid content type passed
+     */
     @Test
     public void should_return_415_for_invalid_post_request_with_invalid_content_type() {
         assertThrows(ResponseStatusException.class, () -> eventController.sendTrackingData(topicName, "xml", request));
     }
 
+    /**
+     * Test to verify that the method returns 404 on invalid topic name passed
+     */
     @Test
     public void should_return_404_for_valid_post_request_with_topic_that_does_not_exist() {
         assertThrows(ResponseStatusException.class, () -> eventController.sendTrackingData(topicName, StringConstants.TEXT_PLAIN, request));

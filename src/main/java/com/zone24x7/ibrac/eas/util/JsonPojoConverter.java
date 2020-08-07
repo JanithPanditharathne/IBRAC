@@ -30,19 +30,6 @@ public class JsonPojoConverter {
     }
 
     /**
-     * Method to convert an input json string to a given pojo of class type.
-     *
-     * @param inputNode the input json string
-     * @param classType the class type to convert
-     * @param <T>       the class type
-     * @return the pojo
-     * @throws IOException if an error occurs
-     */
-    public static <T> T toPojo(String inputNode, Class<T> classType) throws IOException {
-        return mapper.readValue(inputNode, classType);
-    }
-
-    /**
      * Method to convert a pojo object to a json node.
      *
      * @param pojo the pojo object to convert
@@ -54,17 +41,6 @@ public class JsonPojoConverter {
     }
 
     /**
-     * Method to convert a pojo to a map.
-     *
-     * @param pojo the pojo object to convert
-     * @param <T>  <T>  the class type
-     * @return the pojo
-     */
-    public static <T> Map<String, String> toMap(T pojo) {
-        return mapper.convertValue(pojo, new TypeReference<Map<String, String>>() {});
-    }
-
-    /**
      * Method to convert string to given pojo class.
      *
      * @param inputNode         input json string
@@ -73,9 +49,5 @@ public class JsonPojoConverter {
      */
     public static <T> T toPojo(String inputNode, TypeReference<T> typeReference) throws IOException {
         return mapper.readValue(inputNode, typeReference);
-    }
-
-    public static <T> List<T> toList(T pojo) {
-        return mapper.convertValue(pojo, new TypeReference<List<T>>() {});
     }
 }
