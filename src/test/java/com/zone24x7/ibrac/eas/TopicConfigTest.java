@@ -1,8 +1,12 @@
 package com.zone24x7.ibrac.eas;
 
+import com.zone24x7.ibrac.eas.util.AppConfigStringConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -10,21 +14,41 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+/**
+ * Class to test the topic config class.
+ */
 public class TopicConfigTest {
     private TopicConfig topicConfig = null;
+    private TopicConfig topicConfig1 = null;
+    private Map<String, String> configMap = new HashMap<>();
+    private Map<String, String> hashMap;
 
+
+    /**
+     * Method to setup the dependencies for the test class
+     */
     @BeforeEach
     public void setup() {
         topicConfig = new TopicConfig();
+        configMap.put("eas.topics.rectrack.converter" , "default");
+        configMap.put("eas.topics.rectrack.formatter" , "default");
+        configMap.put("eas.topics.rectrack.preprocessor" , "default");
+
+        hashMap = mock(Map.class);
+
+        ReflectionTestUtils.setField(topicConfig, "configMap", hashMap);
     }
 
     /**
      * Test to verify that the getConfigurations method returns an empty Map when called without populate() method.
      */
     @Test
-    public void should_return_empty_recon_lib_map_when_called_without_initialization() {
-        Map<String, String> returnedHashmap = topicConfig.getConfigurations();
-        assertThat(returnedHashmap, is(notNullValue()));
+    public void should_return_empty_map_when_called_without_initialization() {
+        Map<String, String> returnedHashMap = topicConfig.getConfigurations();
+        assertThat(returnedHashMap, is(notNullValue()));
     }
 
     /**
@@ -53,5 +77,13 @@ public class TopicConfigTest {
     public void should_return_false_if_null_is_passed() {
         boolean returnedResult = topicConfig.equals(null);
         assertThat(returnedResult, is(false));
+    }
+
+    /**
+     * Test to verify that false is returned when null is passed as the parameter.
+     */
+    @Test
+    public void should_return_empty_recon_lib_map_when_called_without_initialization1() {
+        int returnValue = topicConfig.hashCode();
     }
 }

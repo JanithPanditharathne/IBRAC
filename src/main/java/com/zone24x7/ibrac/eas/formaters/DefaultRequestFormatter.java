@@ -1,7 +1,6 @@
 package com.zone24x7.ibrac.eas.formaters;
 
 import com.zone24x7.ibrac.eas.pojo.EventInputParams;
-import com.zone24x7.ibrac.eas.util.StringConstants;
 import org.springframework.stereotype.Component;
 
 /**

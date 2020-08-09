@@ -31,7 +31,6 @@ public class RecWebMvcConfigurer implements WebMvcConfigurer {
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        //TODO: Add proper CORS mappings
         registry.addMapping("/event-accumulator/**")
                 .allowedOrigins("*")
                 .allowedHeaders("Content-Type")

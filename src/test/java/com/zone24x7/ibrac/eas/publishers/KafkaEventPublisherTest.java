@@ -61,7 +61,6 @@ public class KafkaEventPublisherTest {
     public void should_publish_the_message_when_valid_topic_and_valid_message_passed(){
 
         when(template.send(topicName,eventData)).thenReturn(listenableFuture);
-        //kafkaEventPublisher.publishToTopic(eventInputParams);
 
         long offset = 1;
         int partition = 1;
@@ -69,9 +68,7 @@ public class KafkaEventPublisherTest {
 
         SendResult<String, Object> sendResult = mock(SendResult.class);
         ListenableFuture<SendResult<String, Object>> responseFuture = mock(ListenableFuture.class);
-        //RecordMetadata recordMetadata = new RecordMetadata(new TopicPartition(topic, partition), offset, 0L, 0L, 0L, 0, 0);
 
-        //BDDMockito.given(sendResult.getRecordMetadata()).willReturn(recordMetadata);
         when(template.send(topicName, eventData)).thenReturn(responseFuture);
         doAnswer(invocationOnMock -> {
             ListenableFutureCallback listenableFutureCallback = invocationOnMock.getArgument(0);
@@ -82,8 +79,6 @@ public class KafkaEventPublisherTest {
         }).when(responseFuture).addCallback(any(ListenableFutureCallback.class));
 
         kafkaEventPublisher.publishToTopic(eventInputParams);
-
-        //verify(kafkaTemplate, times(1)).send(topic, key, siebelRecord);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.zone24x7.ibrac.eas.converters;
 
 import com.zone24x7.ibrac.eas.pojo.EventInputParams;
-import com.zone24x7.ibrac.eas.util.StringConstants;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 

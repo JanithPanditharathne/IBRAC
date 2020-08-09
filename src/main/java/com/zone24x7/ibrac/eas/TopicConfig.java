@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Configuration class for injecting Recon Lib related configs.
+ * Configuration class for injecting topic related configs.
  */
 @Configuration
 @ConfigurationProperties(prefix = AppConfigStringConstants.CONFIG_TOPIC_PREFIX)
@@ -18,9 +18,9 @@ public class TopicConfig extends HashMap<String, String> {
     private Map<String, String> configMap = new HashMap<>();
 
     /**
-     * Method to generate the recon lib configurations map by adding the missing prefixes.
+     * Method to get the topic configurations map.
      *
-     * @return the recon lib configurations map
+     * @return the topic configurations map
      */
     public Map<String, String> getConfigurations() {
         return this.configMap;

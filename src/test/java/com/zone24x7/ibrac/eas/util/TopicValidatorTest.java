@@ -10,11 +10,17 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-class TopicValidatorTest {
+/**
+ * Class to test the Topic validator class.
+ */
+public class TopicValidatorTest {
 
     private TopicValidator topicValidator;
 
 
+    /**
+     * Method to setup the dependencies for the test class
+     */
     @BeforeEach
     void setup() {
         topicValidator = new TopicValidator();
