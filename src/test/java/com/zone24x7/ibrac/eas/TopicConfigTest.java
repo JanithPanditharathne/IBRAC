@@ -80,10 +80,10 @@ class TopicConfigTest {
     }
 
     /**
-     * Test to verify that false is returned when null is passed as the parameter.
+     * Test to verify that the correct hashcode is returned
      */
     @Test
-    void should_return_empty_recon_lib_map_when_called_without_initialization1() {
+    void test_to_verify_that_the_correct_hashcodde_is_returned() {
         assertThat(topicConfig.hashCode(),is(hashMap.hashCode()));
     }
 }
