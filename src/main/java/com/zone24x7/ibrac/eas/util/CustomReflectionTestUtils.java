@@ -21,7 +21,7 @@ public class CustomReflectionTestUtils {
      * @param newValue the new value to set
      * @throws Exception if an error occurs
      */
-    public static void setFinalStaticField(Field field, Object newValue) throws Exception {
+    public static void setFinalStaticField(Field field, Object newValue) throws NoSuchFieldException, IllegalAccessException {
         field.setAccessible(true);
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         modifiersField.setAccessible(true);

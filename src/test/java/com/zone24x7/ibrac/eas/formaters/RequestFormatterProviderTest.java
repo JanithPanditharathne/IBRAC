@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 /**
  * Class to test RequestFormatterProvider.
  */
-public class RequestFormatterProviderTest {
+class RequestFormatterProviderTest {
     private RequestFormatterProvider requestFormatterProvider;
     private RequestFormatter defaultRequestFormatter = mock(RequestFormatter.class);
     private RequestFormatter requestFormatter1 = mock(RequestFormatter.class);
@@ -28,7 +28,7 @@ public class RequestFormatterProviderTest {
      * Setup method.
      */
     @BeforeEach
-    public void setup() {
+    void setup() {
         Map<String, RequestFormatter> requestFormatterMap = new HashMap<>();
         requestFormatterMap.put(null, defaultRequestFormatter);
         requestFormatterMap.put("default", defaultRequestFormatter);
@@ -51,7 +51,7 @@ public class RequestFormatterProviderTest {
      * Test to verify that the default formatter is returned when the topic name is not mentioned in the configurations.
      */
     @Test
-    public void should_return_default_formatter_if_topic_name_is_not_in_configurations() {
+    void should_return_default_formatter_if_topic_name_is_not_in_configurations() {
         RequestFormatter result = requestFormatterProvider.get("topicNameWithoutConfiguration");
         assertThat(result, is(equalTo(defaultRequestFormatter)));
     }
@@ -60,7 +60,7 @@ public class RequestFormatterProviderTest {
      * Test to verify that the default formatter is returned when the topic name has the default formatter mentioned.
      */
     @Test
-    public void should_return_default_formatter_if_topic_name_has_default_formatter() {
+    void should_return_default_formatter_if_topic_name_has_default_formatter() {
         RequestFormatter result = requestFormatterProvider.get("topic1");
         assertThat(result, is(equalTo(defaultRequestFormatter)));
     }
@@ -69,7 +69,7 @@ public class RequestFormatterProviderTest {
      * Test to verify that the correct formatter is returned according to the configuration.
      */
     @Test
-    public void should_return_correct_formatter_if_according_to_the_topic_configuration() {
+    void should_return_correct_formatter_if_according_to_the_topic_configuration() {
         RequestFormatter result = requestFormatterProvider.get("topic2");
         assertThat(result, is(equalTo(requestFormatter1)));
     }
@@ -78,7 +78,7 @@ public class RequestFormatterProviderTest {
      * Test to verify that the null is returned when the configuration has an invalid formatter which does not exist.
      */
     @Test
-    public void should_return_null_if_a_wrong_formatter_is_mentioned_in_configuration_which_does_not_exist() {
+    void should_return_null_if_a_wrong_formatter_is_mentioned_in_configuration_which_does_not_exist() {
         RequestFormatter result = requestFormatterProvider.get("topic3");
         assertThat(result, is(equalTo(null)));
     }

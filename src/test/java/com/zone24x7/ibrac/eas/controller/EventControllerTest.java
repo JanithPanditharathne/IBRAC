@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 /**
  * Class to test the Event Controller.
  */
-public class EventControllerTest {
+class EventControllerTest {
     private TopicValidator topicValidator;
     private EventController eventController;
     private EventRequestHandler eventRequestHandler;
@@ -70,7 +70,7 @@ public class EventControllerTest {
      * Test to verify that the method returns a valid ID when it is called
      */
     @Test
-    public void should_generateValidUUID_for_methodCall() {
+    void should_generateValidUUID_for_methodCall() {
         ResponseEntity<Object> responseEntity = eventController.getCorrelationId();
         assertThat(responseEntity.getStatusCode().toString(), is("200 OK"));
         assertThat(responseEntity.getBody().toString(), is(notNullValue()));
@@ -80,7 +80,7 @@ public class EventControllerTest {
      * Test to verify that the method returns 204 no content on valid post request
      */
     @Test
-    public void should_return_204_no_content_for_valid_post_request_with_valid_parameters() throws IOException {
+    void should_return_204_no_content_for_valid_post_request_with_valid_parameters() throws IOException {
         when(topicValidator.validate(topicName)).thenReturn(true);
         when(mdcAdapter.get("correlationId")).thenReturn(requestId);
         when(eventRequestHandler.handleRequest(eventInputParams)).thenReturn(null);
@@ -93,7 +93,7 @@ public class EventControllerTest {
      * Test to verify that the method returns 500 internal server error when invalid json is passed as the request body
      */
     @Test
-    public void should_return_500_internal_server_error_when_invalid_json_request() throws IOException {
+    void should_return_500_internal_server_error_when_invalid_json_request() throws IOException {
         when(topicValidator.validate(topicName)).thenReturn(true);
         when(mdcAdapter.get("correlationId")).thenReturn(requestId);
         when(eventRequestHandler.handleRequest(ArgumentMatchers.any())).thenThrow(new IOException());
@@ -104,7 +104,7 @@ public class EventControllerTest {
      * Test to verify that the method returns 415 invalid post request when Invalid content type passed
      */
     @Test
-    public void should_return_415_for_invalid_post_request_with_invalid_content_type() {
+    void should_return_415_for_invalid_post_request_with_invalid_content_type() {
         assertThrows(ResponseStatusException.class, () -> eventController.sendTrackingData(topicName, "xml", request));
     }
 
@@ -112,7 +112,7 @@ public class EventControllerTest {
      * Test to verify that the method returns 404 on invalid topic name passed
      */
     @Test
-    public void should_return_404_for_valid_post_request_with_topic_that_does_not_exist() {
+    void should_return_404_for_valid_post_request_with_topic_that_does_not_exist() {
         assertThrows(ResponseStatusException.class, () -> eventController.sendTrackingData(topicName, StringConstants.TEXT_PLAIN, request));
     }
 }

@@ -22,7 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class EventRequestHandlerTest {
+class EventRequestHandlerTest {
     private EventRequestHandler eventRequestHandler;
     private RequestConverter requestConverter;
     private RequestConverterProvider requestConverterProvider;
@@ -64,7 +64,7 @@ public class EventRequestHandlerTest {
      * Test to verify that the topic validator method returns true for an existing topic.
      */
     @Test
-    public void should_return_the_same_request_string_for_rectrack_topic() throws IOException {
+    void should_return_the_same_request_string_for_rectrack_topic() throws IOException {
 
         when(requestConverterProvider.get(topicName)).thenReturn(requestConverter);
         when(requestConverter.convert(eventInputParams)).thenReturn(eventInputParams);

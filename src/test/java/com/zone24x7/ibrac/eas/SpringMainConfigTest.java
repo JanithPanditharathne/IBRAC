@@ -21,7 +21,7 @@ class SpringMainConfigTest {
      * Test to verify that the method returns a valid list for a valid string with topics.
      */
     @Test
-    public void should_return_correctlist_when_passing_validtopics() {
+    void should_return_correctlist_when_passing_validtopics() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         List<String> listOfWhitelistedTopics = springMainConfig.provideWhitelistedTopicList("rectrack,topic1,topic2");
         assertThat(listOfWhitelistedTopics, equalTo(whiteListedTopicsList));
@@ -31,7 +31,7 @@ class SpringMainConfigTest {
      * Test to verify that the method returns a valid list for a valid string with topics that have spaces in the front.
      */
     @Test
-    public void should_return_list_of_items_without_spaces_when_passing_topics_with_spaces_in_front() {
+    void should_return_list_of_items_without_spaces_when_passing_topics_with_spaces_in_front() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         List<String> listOfWhitelistedTopics = springMainConfig.provideWhitelistedTopicList(" rectrack, topic1, topic2");
         assertThat(listOfWhitelistedTopics, equalTo(whiteListedTopicsList));
@@ -41,7 +41,7 @@ class SpringMainConfigTest {
      * Test to verify that the method returns a valid list for a valid string with topics that have spaces in the back.
      */
     @Test
-    public void should_return_list_of_items_without_spaces_when_passing_topics_with_spaces_in_back() {
+    void should_return_list_of_items_without_spaces_when_passing_topics_with_spaces_in_back() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         List<String> listOfWhitelistedTopics = springMainConfig.provideWhitelistedTopicList("rectrack ,topic1 ,topic2 ");
         assertThat(listOfWhitelistedTopics, equalTo(whiteListedTopicsList));
@@ -51,7 +51,7 @@ class SpringMainConfigTest {
      * Test to verify that the method returns a valid list for a valid string with topics that have spaces on both sides.
      */
     @Test
-    public void should_return_list_of_items_without_spaces_when_passing_topics_with_spaces_on_both_sides() {
+    void should_return_list_of_items_without_spaces_when_passing_topics_with_spaces_on_both_sides() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         List<String> listOfWhitelistedTopics = springMainConfig.provideWhitelistedTopicList(" rectrack , topic1 , topic2 ");
         assertThat(listOfWhitelistedTopics, equalTo(whiteListedTopicsList));
@@ -61,7 +61,7 @@ class SpringMainConfigTest {
      * Test to verify that the method returns the valid hashmap of request converters.
      */
     @Test
-    public void should_return_default_request_converter_map_when_called() {
+    void should_return_default_request_converter_map_when_called() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         DefaultRequestConverter defaultRequestConverter = new DefaultRequestConverter();
         Map<String, RequestConverter> returnedRequestConverterMap = springMainConfig.provideRequestConverterMap(defaultRequestConverter);
@@ -75,7 +75,7 @@ class SpringMainConfigTest {
      * Test to verify that the method returns the valid hashmap of request formatters.
      */
     @Test
-    public void should_return_default_request_formatter_map_when_called() {
+    void should_return_default_request_formatter_map_when_called() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         DefaultRequestFormatter defaultRequestFormatter = new DefaultRequestFormatter();
         Map<String, RequestFormatter> returnedRequestConverterMap = springMainConfig.provideRequestFormatterMap(defaultRequestFormatter);
@@ -89,7 +89,7 @@ class SpringMainConfigTest {
      * Test to verify that the method returns the valid hashmap of pre processors.
      */
     @Test
-    public void should_return_default_preprocessor_map_when_called() {
+    void should_return_default_preprocessor_map_when_called() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         DefaultPreProcessor defaultPreProcessor = new DefaultPreProcessor();
         Map<String, PreProcessor> returnedPreProcessorMap = springMainConfig.providePreProcessorMap(defaultPreProcessor);
@@ -98,5 +98,4 @@ class SpringMainConfigTest {
         preProcessorMap.put(StringConstants.DEFAULT_KEY, defaultPreProcessor);
         assertThat(returnedPreProcessorMap, equalTo(preProcessorMap));
     }
-
 }

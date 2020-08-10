@@ -13,10 +13,8 @@ import static org.hamcrest.Matchers.is;
 /**
  * Class to test the Topic validator class.
  */
-public class TopicValidatorTest {
-
+class TopicValidatorTest {
     private TopicValidator topicValidator;
-
 
     /**
      * Method to setup the dependencies for the test class
@@ -33,7 +31,7 @@ public class TopicValidatorTest {
      * Test to verify that the topic validator method returns true for an existing topic.
      */
     @Test
-    public void should_returnTrue_for_methodCallWithExistingTopic() {
+    void should_returnTrue_for_methodCallWithExistingTopic() {
         assertThat(topicValidator.validate("rectrack"), is(true));
     }
 
@@ -41,7 +39,7 @@ public class TopicValidatorTest {
      * Test to verify that the topic validator method returns false for a topic that doesn't exist.
      */
     @Test
-    public void should_returnFalse_for_methodCallWithoutAnExistingTopic() {
+    void should_returnFalse_for_methodCallWithoutAnExistingTopic() {
         assertThat(topicValidator.validate("abc"), is(false));
     }
 

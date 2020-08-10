@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 /**
  * Class to test the topic config class.
  */
-public class CorrelationInterceptorTest {
+class CorrelationInterceptorTest {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
@@ -58,7 +58,7 @@ public class CorrelationInterceptorTest {
      * Test to verify that the correlation id is getting from the header correctly.
      */
     @Test
-    public void should_get_the_correlation_id_from_header_correctly() throws Exception{
+    void should_get_the_correlation_id_from_header_correctly() throws Exception{
        when(request.getHeader(CORRELATION_ID_HEADER_NAME)).thenReturn(correlationId);
        boolean returnVlaue = correlationInterceptor.preHandle(request,response,handler);
         assertThat(returnVlaue, is(true));
@@ -68,7 +68,7 @@ public class CorrelationInterceptorTest {
      * Test to verify that the correlation id is getting from mdc adapter when x-correlation id is empty in header.
      */
     @Test
-    public void should_get_the_correlation_id_from_mdcAdapter_when_header_x_correlation_id_is_empty() throws Exception{
+    void should_get_the_correlation_id_from_mdcAdapter_when_header_x_correlation_id_is_empty() throws Exception{
         when(request.getHeader(CORRELATION_ID_HEADER_NAME)).thenReturn(emptyCorrelationId);
         boolean returnVlaue = correlationInterceptor.preHandle(request,response,handler);
         assertThat(returnVlaue, is(true));
@@ -78,12 +78,9 @@ public class CorrelationInterceptorTest {
      * Test to verify that the after completion method working correctly.
      */
     @Test
-    public void should_execute_after_completion_successfully() throws Exception{
+    void should_execute_after_completion_successfully() throws Exception{
         when(MDC.get(CORRELATION_ID_MDC_ATTRIBUTE_NAME)).thenReturn(correlationId);
         when(MDC.get(START_DATE_TIME_MDC_ATTRIBUTE_NAME)).thenReturn(correlationId);
-
-
-
         correlationInterceptor.afterCompletion(request,response,handler,new Exception());
     }
 }

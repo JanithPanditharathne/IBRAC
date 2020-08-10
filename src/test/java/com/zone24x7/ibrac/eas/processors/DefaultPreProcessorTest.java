@@ -11,12 +11,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class DefaultPreProcessorTest {
+class DefaultPreProcessorTest {
     /**
      * Method to test that the object with date appended to it is passed when a valid object as text is passed.
      */
     @Test
-    public void should_return_object_with_time_appended_to_the_event_data_when_valid_object_as_text_is_passed() {
+    void should_return_object_with_time_appended_to_the_event_data_when_valid_object_as_text_is_passed() {
         String requestId = MDC.get("correlationId");
         EventInputParams eventInputParams = new EventInputParams(requestId, "test", "eventData", StringConstants.TEXT_PLAIN);
         DefaultPreProcessor defaultPreProcessor = new DefaultPreProcessor();
@@ -34,7 +34,7 @@ public class DefaultPreProcessorTest {
      * Method to test that the object with date appended to it is passed when a valid object as json is passed.
      */
     @Test
-    public void should_return_object_with_time_appended_to_the_event_data_when_valid_object_as_json_is_passed() {
+    void should_return_object_with_time_appended_to_the_event_data_when_valid_object_as_json_is_passed() {
         String requestId = MDC.get("correlationId");
         String jsonInputString = "{\n" +
                 "  \"timeStamp\": 1467113349463," +

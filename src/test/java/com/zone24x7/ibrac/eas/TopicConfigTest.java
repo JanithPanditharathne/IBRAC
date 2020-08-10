@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 /**
  * Class to test the topic config class.
  */
-public class TopicConfigTest {
+class TopicConfigTest {
     private TopicConfig topicConfig = null;
     private TopicConfig topicConfig1 = null;
     private Map<String, String> configMap = new HashMap<>();
@@ -31,7 +31,7 @@ public class TopicConfigTest {
      * Method to setup the dependencies for the test class
      */
     @BeforeEach
-    public void setup() {
+    void setup() {
         topicConfig = new TopicConfig();
         configMap.put("eas.topics.rectrack.converter" , "default");
         configMap.put("eas.topics.rectrack.formatter" , "default");
@@ -46,7 +46,7 @@ public class TopicConfigTest {
      * Test to verify that the getConfigurations method returns an empty Map when called without populate() method.
      */
     @Test
-    public void should_return_empty_map_when_called_without_initialization() {
+    void should_return_empty_map_when_called_without_initialization() {
         Map<String, String> returnedHashMap = topicConfig.getConfigurations();
         assertThat(returnedHashMap, is(notNullValue()));
     }
@@ -55,7 +55,7 @@ public class TopicConfigTest {
      * Test to verify that true is returned when the same object is compared.
      */
     @Test
-    public void should_return_true_if_objects_are_equal() {
+    void should_return_true_if_objects_are_equal() {
         boolean returnedResult = topicConfig.equals(topicConfig);
         assertThat(returnedResult, is(true));
     }
@@ -64,7 +64,7 @@ public class TopicConfigTest {
      * Test to verify that false is returned when different Objects are compared.
      */
     @Test
-    public void should_return_false_if_objects_are_not_equal() {
+    void should_return_false_if_objects_are_not_equal() {
         Random differentTopicConfigObject = new Random();
         boolean returnedResult = topicConfig.equals(differentTopicConfigObject);
         assertThat(returnedResult, is(false));
@@ -74,7 +74,7 @@ public class TopicConfigTest {
      * Test to verify that false is returned when null is passed as the parameter.
      */
     @Test
-    public void should_return_false_if_null_is_passed() {
+    void should_return_false_if_null_is_passed() {
         boolean returnedResult = topicConfig.equals(null);
         assertThat(returnedResult, is(false));
     }
@@ -83,7 +83,7 @@ public class TopicConfigTest {
      * Test to verify that false is returned when null is passed as the parameter.
      */
     @Test
-    public void should_return_empty_recon_lib_map_when_called_without_initialization1() {
-        int returnValue = topicConfig.hashCode();
+    void should_return_empty_recon_lib_map_when_called_without_initialization1() {
+        assertThat(topicConfig.hashCode(),is(hashMap.hashCode()));
     }
 }

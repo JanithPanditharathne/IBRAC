@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 /**
  * Class to test PreProcessorProvider.
  */
-public class PreProcessorProviderTest {
+class PreProcessorProviderTest {
     private PreProcessorProvider preProcessorProvider;
     private PreProcessor defaultPreProcessor = mock(PreProcessor.class);
     private PreProcessor preProcessor1 = mock(PreProcessor.class);
@@ -50,7 +50,7 @@ public class PreProcessorProviderTest {
      * Test to verify that the default preprocessor is returned when the topic name is not mentioned in the configurations.
      */
     @Test
-    public void should_return_default_preprocessor_if_topic_name_is_not_in_configurations() {
+    void should_return_default_preprocessor_if_topic_name_is_not_in_configurations() {
         PreProcessor result = preProcessorProvider.get("topicNameWithoutConfiguration");
         assertThat(result, is(equalTo(defaultPreProcessor)));
     }
@@ -59,7 +59,7 @@ public class PreProcessorProviderTest {
      * Test to verify that the default preprocessor is returned when the topic name has the default preprocessor mentioned.
      */
     @Test
-    public void should_return_default_preprocessor_if_topic_name_has_default_preprocessor() {
+    void should_return_default_preprocessor_if_topic_name_has_default_preprocessor() {
         PreProcessor result = preProcessorProvider.get("topic1");
         assertThat(result, is(equalTo(defaultPreProcessor)));
     }
@@ -68,7 +68,7 @@ public class PreProcessorProviderTest {
      * Test to verify that the correct preprocessor is returned according to the configuration.
      */
     @Test
-    public void should_return_correct_preprocessor_if_according_to_the_topic_configuration() {
+    void should_return_correct_preprocessor_if_according_to_the_topic_configuration() {
         PreProcessor result = preProcessorProvider.get("topic2");
         assertThat(result, is(equalTo(preProcessor1)));
     }
@@ -77,7 +77,7 @@ public class PreProcessorProviderTest {
      * Test to verify that the null is returned when the configuration has an invalid preprocessor which does not exist.
      */
     @Test
-    public void should_return_null_if_a_wrong_preprocessor_is_mentioned_in_configuration_which_does_not_exist() {
+    void should_return_null_if_a_wrong_preprocessor_is_mentioned_in_configuration_which_does_not_exist() {
         PreProcessor result = preProcessorProvider.get("topic3");
         assertThat(result, is(equalTo(null)));
     }

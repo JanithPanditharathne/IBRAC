@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 /**
  * Test class for RequestConverterProvider.
  */
-public class RequestConverterProviderTest {
+class RequestConverterProviderTest {
     private RequestConverterProvider requestConverterProvider;
     private RequestConverter defaultRequestConverter = mock(RequestConverter.class);
     private RequestConverter requestConverter1 = mock(RequestConverter.class);
@@ -27,7 +27,7 @@ public class RequestConverterProviderTest {
      * Setup method.
      */
     @BeforeEach
-    public void setup() {
+    void setup() {
         Map<String, RequestConverter> requestConverterMap = new HashMap<>();
         requestConverterMap.put(null, defaultRequestConverter);
         requestConverterMap.put("default", defaultRequestConverter);
@@ -50,7 +50,7 @@ public class RequestConverterProviderTest {
      * Test to verify that the default converter is returned when the topic name is not mentioned in the configurations.
      */
     @Test
-    public void should_return_default_converter_if_topic_name_is_not_in_configurations() {
+    void should_return_default_converter_if_topic_name_is_not_in_configurations() {
         RequestConverter result = requestConverterProvider.get("topicNameWithoutConfiguration");
         assertThat(result, is(equalTo(defaultRequestConverter)));
     }
@@ -59,7 +59,7 @@ public class RequestConverterProviderTest {
      * Test to verify that the default converter is returned when the topic name has the default converter mentioned.
      */
     @Test
-    public void should_return_default_converter_if_topic_name_has_default_converter() {
+    void should_return_default_converter_if_topic_name_has_default_converter() {
         RequestConverter result = requestConverterProvider.get("topic1");
         assertThat(result, is(equalTo(defaultRequestConverter)));
     }
@@ -68,7 +68,7 @@ public class RequestConverterProviderTest {
      * Test to verify that the correct converter is returned according to the configuration.
      */
     @Test
-    public void should_return_correct_converter_if_according_to_the_topic_configuration() {
+    void should_return_correct_converter_if_according_to_the_topic_configuration() {
         RequestConverter result = requestConverterProvider.get("topic2");
         assertThat(result, is(equalTo(requestConverter1)));
     }
@@ -77,7 +77,7 @@ public class RequestConverterProviderTest {
      * Test to verify that the null is returned when the configuration has an invalid converter which does not exist.
      */
     @Test
-    public void should_return_null_if_a_wrong_converter_is_mentioned_in_configuration_which_does_not_exist() {
+    void should_return_null_if_a_wrong_converter_is_mentioned_in_configuration_which_does_not_exist() {
         RequestConverter result = requestConverterProvider.get("topic3");
         assertThat(result, is(equalTo(null)));
     }

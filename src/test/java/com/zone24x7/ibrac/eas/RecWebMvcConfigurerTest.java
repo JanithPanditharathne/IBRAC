@@ -13,7 +13,7 @@ import static org.mockito.Mockito.when;
 /**
  * Class to test the rec web mvc configurer.
  */
-public class RecWebMvcConfigurerTest {
+class RecWebMvcConfigurerTest {
 
     private RecWebMvcConfigurer recWebMvcConfigurer;
     private CorrelationInterceptor correlationInterceptor;
@@ -40,7 +40,7 @@ public class RecWebMvcConfigurerTest {
      * Test to verify that the correlation interceptor added to parameterized registry.
      */
     @Test
-    public void should_add_correlation_interceptor_to_parameterize_registry() {
+    void should_add_correlation_interceptor_to_parameterize_registry() {
         recWebMvcConfigurer.addInterceptors(registry);
     }
 
@@ -48,7 +48,7 @@ public class RecWebMvcConfigurerTest {
      * Test to verify that the cores mapping added successfully.
      */
     @Test
-    public void should_add_cores_mapping_successfully() {
+    void should_add_cores_mapping_successfully() {
         when(corsRegistry.addMapping(pathPattern)).thenReturn(corsRegistration);
         when(corsRegistration.allowedOrigins("*")).thenReturn(corsRegistration);
         when(corsRegistration.allowedHeaders("Content-Type")).thenReturn(corsRegistration);

@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 /**
  * Class to test the Kafka Event Puvlisher.
  */
-public class KafkaEventPublisherTest {
+class KafkaEventPublisherTest {
 
     private KafkaEventPublisher kafkaEventPublisher;
     private KafkaTemplate<String, Object> template;
@@ -58,7 +58,7 @@ public class KafkaEventPublisherTest {
      *
      */
     @Test
-    public void should_publish_the_message_when_valid_topic_and_valid_message_passed(){
+    void should_publish_the_message_when_valid_topic_and_valid_message_passed(){
 
         when(template.send(topicName,eventData)).thenReturn(listenableFuture);
 
