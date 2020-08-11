@@ -40,6 +40,7 @@ public class EventController {
      */
     @GetMapping(path = "/eas/v1/correlation/id", produces = "text/plain")
     public ResponseEntity<Object> getCorrelationId() {
+        // Generate random UUID and include the same into the response.
         return ResponseEntity.ok().body(UUID.randomUUID().toString());
     }
 
@@ -50,24 +51,28 @@ public class EventController {
      */
     @PostMapping(path = "/eas/v1/topics/{topic}", consumes = {"application/json", "text/plain"})
     public ResponseEntity<Object> sendTrackingData(@PathVariable("topic") String topic, @RequestHeader("Content-type") String contentType, @RequestBody String requestBody) {
-
+        //Get a new correlationId and store it in requestId
         String requestId = MDC.get("correlationId");
         EventInputParams eventInputParams = new EventInputParams(requestId, topic, requestBody, contentType);
 
         try {
             if (topicValidator.validate(topic)) {
-
+                //Call to eventRequestHandler, to convert, format and process the eventData
                 eventRequestHandler.handleRequest(eventInputParams);
-
+                //Call to kafkaEventPublisher, to publish the message to the topic.
                 kafkaEventPublisher.publishToTopic(eventInputParams);
-
+                // Upon Successful calls, return 204 no content response
                 return ResponseEntity.noContent().build();
-            } else {
+            } else { // If topic is not present in the properties file
+                // Log the topic that was sent in the POST
                 LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Topic not supported: {}", requestId, topic);
+                // Return error code 404 and error message - "Error, Topic Not Found"
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error, Topic Not Found");
             }
-        } catch (IOException ioException){
+        } catch (IOException ioException) { // If an invalid JSON request was passed, handleRequest() will throw an IOException which will be caught here.
+            // Log the requestId and eventData that was sent in the POST
             LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Json parsing error: {}", requestId, eventInputParams.getEventData());
+            // Return error code 505 and error message - "Error, Json parsing error"
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error, Json parsing error");
         }
     }

@@ -7,9 +7,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.servlet.config.annotation.CorsRegistration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+
+import static org.mockito.Mockito.*;
 
 /**
  * Class to test the rec web mvc configurer.
@@ -44,6 +43,7 @@ class RecWebMvcConfigurerTest {
     @Test
     void should_add_correlation_interceptor_to_parameterize_registry() {
         recWebMvcConfigurer.addInterceptors(registry);
+        // Verify that the correlation interceptor is added to the parameterized registry
         verify(registry).addInterceptor(correlationInterceptor);
     }
 
@@ -57,6 +57,7 @@ class RecWebMvcConfigurerTest {
         when(corsRegistration.allowedHeaders("Content-Type")).thenReturn(corsRegistration);
         when(corsRegistration.allowedHeaders("GET")).thenReturn(corsRegistration);
         recWebMvcConfigurer.addCorsMappings(corsRegistry);
+        // Verify that the cors mapping added successfully.
         verify(corsRegistry).addMapping("/event-accumulator/**");
     }
 }

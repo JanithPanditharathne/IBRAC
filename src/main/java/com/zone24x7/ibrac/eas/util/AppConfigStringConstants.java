@@ -15,6 +15,7 @@ public final class AppConfigStringConstants {
      * Private constructor to stop initiation
      */
     private AppConfigStringConstants() {
+        // If we try to initiate this class the IllegalStateException() is thrown.
         throw new IllegalStateException("AppConfigStringConstants is a utility class");
     }
 }

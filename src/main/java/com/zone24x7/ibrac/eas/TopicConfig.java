@@ -31,6 +31,7 @@ public class TopicConfig extends HashMap<String, String> {
      */
     @PostConstruct
     private void populateMap() {
+        // If the configMap is empty it will populate the config map from the properties file.
         if (configMap.isEmpty()) {
             this.forEach((key, value) -> configMap.put(AppConfigStringConstants.CONFIG_TOPIC_PREFIX + "." + key, value));
         }
@@ -44,14 +45,17 @@ public class TopicConfig extends HashMap<String, String> {
      */
     @Override
     public boolean equals(Object o) {
+        // If it is the same object being compared, return true
         if (this == o) {
             return true;
         }
 
+        // if the object is null or if it is of different types, return null.
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
+        // If the super classes are not equal return false.
         if (!super.equals(o)) {
             return false;
         }

@@ -35,6 +35,7 @@ public class JsonPojoConverter {
      * @return the json node
      */
     public static <T> JsonNode toJson(T pojo) {
+        // Return the converted pojo object as a json node
         return mapper.convertValue(pojo, JsonNode.class);
     }
 
@@ -46,6 +47,7 @@ public class JsonPojoConverter {
      * @return the pojo
      */
     public static <T> T toPojo(String inputNode, TypeReference<T> typeReference) throws IOException {
+        // Return the converted string as a pojo
         return mapper.readValue(inputNode, typeReference);
     }
 }

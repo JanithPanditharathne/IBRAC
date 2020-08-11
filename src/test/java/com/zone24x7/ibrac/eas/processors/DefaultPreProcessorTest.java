@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 
 class DefaultPreProcessorTest {
     /**
@@ -26,7 +25,7 @@ class DefaultPreProcessorTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assertThat(returnedEventInputParams, is(notNullValue()));
+        // AssertThat the returnedEventInputParams is the same as the original eventInputParams
         assertThat(eventInputParams, is(returnedEventInputParams));
     }
 
@@ -55,7 +54,7 @@ class DefaultPreProcessorTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assertThat(returnedEventInputParams, is(notNullValue()));
+        // AssertThat the returnedEventInputParams is the same as the original eventInputParams but with the date appended
         assertThat(eventInputParams, is(returnedEventInputParams));
     }
 }

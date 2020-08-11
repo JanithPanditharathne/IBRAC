@@ -1,9 +1,7 @@
 package com.zone24x7.ibrac.eas;
 
-import com.zone24x7.ibrac.eas.util.AppConfigStringConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.HashMap;
@@ -13,9 +11,7 @@ import java.util.Random;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Class to test the topic config class.
@@ -83,7 +79,8 @@ class TopicConfigTest {
      * Test to verify that the correct hashcode is returned
      */
     @Test
-    void test_to_verify_that_the_correct_hashcodde_is_returned() {
+    void test_to_verify_that_the_correct_hashcode_is_returned() {
+        // AssertThat the correct hashcode is returned.
         assertThat(topicConfig.hashCode(),is(hashMap.hashCode()));
     }
 }

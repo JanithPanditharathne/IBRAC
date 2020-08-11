@@ -11,7 +11,6 @@ import com.zone24x7.ibrac.eas.processors.DefaultPreProcessor;
 import com.zone24x7.ibrac.eas.processors.PreProcessor;
 import com.zone24x7.ibrac.eas.processors.PreProcessorProvider;
 import com.zone24x7.ibrac.eas.util.StringConstants;
-import static org.hamcrest.Matchers.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -19,6 +18,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -65,7 +65,6 @@ class EventRequestHandlerTest {
      */
     @Test
     void should_return_the_same_request_string_for_rectrack_topic() throws IOException {
-
         when(requestConverterProvider.get(topicName)).thenReturn(requestConverter);
         when(requestConverter.convert(eventInputParams)).thenReturn(eventInputParams);
         when(requestFormatterProvider.get(topicName)).thenReturn(requestFormatter);
@@ -73,6 +72,7 @@ class EventRequestHandlerTest {
         when(preProcessorProvider.get(topicName)).thenReturn(preprocessor);
         when(preprocessor.process(eventInputParams)).thenReturn(eventInputParams);
         String result = eventRequestHandler.handleRequest(eventInputParams);
+        // AssertThat true is returned for a topic that exists
         assertThat(result, is(eventInputParams.getEventData()));
     }
 

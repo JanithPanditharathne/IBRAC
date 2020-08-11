@@ -22,6 +22,7 @@ public class RecWebMvcConfigurer implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        // Add interceptors to the InterceptorRegistry
         registry.addInterceptor(correlationInterceptor);
     }
 
@@ -31,6 +32,7 @@ public class RecWebMvcConfigurer implements WebMvcConfigurer {
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        // Add the cors mapping to the CorsRegistry
         registry.addMapping("/event-accumulator/**")
                 .allowedOrigins("*")
                 .allowedHeaders("Content-Type")

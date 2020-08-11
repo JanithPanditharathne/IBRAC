@@ -19,6 +19,7 @@ public class DefaultRequestConverter implements RequestConverter {
      */
     @Override
     public EventInputParams convert(EventInputParams eventInputParams) {
+        // Return the eventInputParams with the converted string
         return eventInputParams;
     }
 }

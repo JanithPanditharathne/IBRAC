@@ -27,7 +27,8 @@ public class PreProcessorProvider {
      * @return the pre processor
      */
     public PreProcessor get(String topicName) {
+        // Create the preprocessorName by appending the prefix+"."+preprocessor
         String preprocessorName = topicConfig.getConfigurations().get(AppConfigStringConstants.CONFIG_TOPIC_PREFIX + "." + topicName + AppConfigStringConstants.CONFIG_TOPIC_PREPROCESSOR);
-        return preProcessorMap.get(preprocessorName);
+        return preProcessorMap.get(preprocessorName); // Get the preProcessorName from the preProcessorMap and return preProcessorName from the map as the response
     }
 }

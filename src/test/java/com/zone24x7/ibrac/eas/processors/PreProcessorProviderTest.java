@@ -52,6 +52,7 @@ class PreProcessorProviderTest {
     @Test
     void should_return_default_preprocessor_if_topic_name_is_not_in_configurations() {
         PreProcessor result = preProcessorProvider.get("topicNameWithoutConfiguration");
+        // AssertThat that the defaultRequestFormatter is returned.
         assertThat(result, is(equalTo(defaultPreProcessor)));
     }
 
@@ -61,6 +62,7 @@ class PreProcessorProviderTest {
     @Test
     void should_return_default_preprocessor_if_topic_name_has_default_preprocessor() {
         PreProcessor result = preProcessorProvider.get("topic1");
+        // AssertThat that the defaultRequestFormatter is returned.
         assertThat(result, is(equalTo(defaultPreProcessor)));
     }
 
@@ -70,6 +72,7 @@ class PreProcessorProviderTest {
     @Test
     void should_return_correct_preprocessor_if_according_to_the_topic_configuration() {
         PreProcessor result = preProcessorProvider.get("topic2");
+        // AssertThat that the defaultRequestFormatter is returned.
         assertThat(result, is(equalTo(preProcessor1)));
     }
 
@@ -79,6 +82,7 @@ class PreProcessorProviderTest {
     @Test
     void should_return_null_if_a_wrong_preprocessor_is_mentioned_in_configuration_which_does_not_exist() {
         PreProcessor result = preProcessorProvider.get("topic3");
+        // AssertThat that null is returned when a topic that does not exist is passed.
         assertThat(result, is(equalTo(null)));
     }
 }

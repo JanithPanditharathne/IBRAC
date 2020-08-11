@@ -9,16 +9,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Field;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Class to test the topic config class.
@@ -41,15 +35,12 @@ class CorrelationInterceptorTest {
     private MDCAdapter mdcAdapter;
 
     @BeforeEach
-    public void setup() throws Exception  {
+    public void setup() {
         correlationInterceptor = new CorrelationInterceptor();
 
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         logger = mock(Logger.class);
-
-        Field loggerField = correlationInterceptor.getClass().getDeclaredField("LOGGER");
-        CustomReflectionTestUtils.setFinalStaticField(loggerField, this.logger);
 
         mdcAdapter = mock(MDCAdapter.class);
         ReflectionTestUtils.setField(MDC.class, "mdcAdapter", mdcAdapter);
@@ -59,30 +50,33 @@ class CorrelationInterceptorTest {
      * Test to verify that the correlation id is getting from the header correctly.
      */
     @Test
-    void should_get_the_correlation_id_from_header_correctly() throws Exception{
-       when(request.getHeader(CORRELATION_ID_HEADER_NAME)).thenReturn(correlationId);
-       boolean returnVlaue = correlationInterceptor.preHandle(request,response,handler);
-        assertThat(returnVlaue, is(true));
+    void should_get_the_correlation_id_from_header_correctly() {
+        when(request.getHeader(CORRELATION_ID_HEADER_NAME)).thenReturn(correlationId);
+        boolean returnValue = correlationInterceptor.preHandle(request, response, handler);
+        // AssertThat the correlationInterceptor returns true.
+        assertThat(returnValue, is(true));
     }
 
     /**
      * Test to verify that the correlation id is getting from mdc adapter when x-correlation id is empty in header.
      */
     @Test
-    void should_get_the_correlation_id_from_mdcAdapter_when_header_x_correlation_id_is_empty() throws Exception{
+    void should_get_the_correlation_id_from_mdcAdapter_when_header_x_correlation_id_is_empty() {
         when(request.getHeader(CORRELATION_ID_HEADER_NAME)).thenReturn(emptyCorrelationId);
-        boolean returnVlaue = correlationInterceptor.preHandle(request,response,handler);
-        assertThat(returnVlaue, is(true));
+        boolean returnValue = correlationInterceptor.preHandle(request, response, handler);
+        // AssertThat the correlationInterceptor returns true when the correlation id is empty
+        assertThat(returnValue, is(true));
     }
 
     /**
      * Test to verify that the after completion method working correctly.
      */
     @Test
-    void should_execute_after_completion_successfully() throws Exception{
+    void should_execute_after_completion_successfully() {
         when(MDC.get(CORRELATION_ID_MDC_ATTRIBUTE_NAME)).thenReturn(correlationId);
         when(MDC.get(START_DATE_TIME_MDC_ATTRIBUTE_NAME)).thenReturn(correlationId);
         correlationInterceptor.afterCompletion(request,response,handler,new Exception());
+        // Test to Verify that the remove method works properly.
         verify(mdcAdapter).remove(START_DATE_TIME_MDC_ATTRIBUTE_NAME);
     }
 }

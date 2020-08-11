@@ -33,23 +33,26 @@ public class KafkaEventPublisher implements EventPublisher {
      * Publish the given message to the given kafka topic.
      *
      * @param eventInputParams     eventInputParams pojo object
-     * @return Processed data if everything succeeds, original data if not
      */
     @Override
     public void publishToTopic(EventInputParams eventInputParams) {
 
+        // Create a new KafkaTemplate object
         KafkaTemplate<String, Object> template = new KafkaTemplate<>(producerFactory());
 
+        //send the message with the event topic and event data
         ListenableFuture<SendResult<String, Object>> future = template.send(eventInputParams.getTopic(), eventInputParams.getEventData());
 
         future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
             @Override
             public void onFailure(Throwable throwable) {
+                // Upon failing to publish the message, the logger will log this message
                 LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Failed to publish the message.", eventInputParams.getRequestId() );
             }
 
             @Override
             public void onSuccess(SendResult<String, Object> stringStringSendResult) {
+                // Upon successful publishing of the message, the logger will log this message
                 LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Message successfully published.", eventInputParams.getRequestId());
             }
         });
@@ -61,10 +64,15 @@ public class KafkaEventPublisher implements EventPublisher {
      * @return Map of producer configs.
      */
     private Map<String, Object> producerConfigs() {
+        // Create new HashMap
         Map<String, Object> props = new HashMap<>();
+        //Put the server ip to the Map
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServeIp);
+        // Put the KEY_SERIALIZER_CLASS_CONFIG
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        // Put the VALUE_SERIALIZER_CLASS_CONFIG
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        // Return the hashmap with the producer configs
         return props;
     }
 
@@ -74,6 +82,7 @@ public class KafkaEventPublisher implements EventPublisher {
      * @return producer factory
      */
     private ProducerFactory<String, Object> producerFactory() {
+        // Return the default producer factory.
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 }

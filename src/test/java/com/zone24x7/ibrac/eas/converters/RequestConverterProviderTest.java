@@ -52,6 +52,7 @@ class RequestConverterProviderTest {
     @Test
     void should_return_default_converter_if_topic_name_is_not_in_configurations() {
         RequestConverter result = requestConverterProvider.get("topicNameWithoutConfiguration");
+        // AssertThat the requestConverter returned is the defaultRequestConverter
         assertThat(result, is(equalTo(defaultRequestConverter)));
     }
 
@@ -61,6 +62,7 @@ class RequestConverterProviderTest {
     @Test
     void should_return_default_converter_if_topic_name_has_default_converter() {
         RequestConverter result = requestConverterProvider.get("topic1");
+        // AssertThat the requestConverter returned is the defaultRequestConverter
         assertThat(result, is(equalTo(defaultRequestConverter)));
     }
 
@@ -70,6 +72,7 @@ class RequestConverterProviderTest {
     @Test
     void should_return_correct_converter_if_according_to_the_topic_configuration() {
         RequestConverter result = requestConverterProvider.get("topic2");
+        // AssertThat the requestConverter returned is the defaultRequestConverter
         assertThat(result, is(equalTo(requestConverter1)));
     }
 
@@ -79,6 +82,7 @@ class RequestConverterProviderTest {
     @Test
     void should_return_null_if_a_wrong_converter_is_mentioned_in_configuration_which_does_not_exist() {
         RequestConverter result = requestConverterProvider.get("topic3");
+        // AssertThat the requestConverter returned is null because the topic doesnt exist
         assertThat(result, is(equalTo(null)));
     }
 }

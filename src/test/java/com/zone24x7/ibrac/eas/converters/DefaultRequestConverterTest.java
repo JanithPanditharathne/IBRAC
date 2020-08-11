@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.MDC;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 class DefaultRequestConverterTest {
     /**
@@ -17,7 +18,7 @@ class DefaultRequestConverterTest {
         EventInputParams eventInputParams = new EventInputParams(requestId, "test", "eventData", "contentType");
         DefaultRequestConverter defaultRequestConverter = new DefaultRequestConverter();
         EventInputParams returnedEventInputParams = defaultRequestConverter.convert(eventInputParams);
-        assertThat(returnedEventInputParams, is(notNullValue()));
+        // AssertThat the original eventInputParams is the same as the returned event input params
         assertThat(eventInputParams, is(returnedEventInputParams));
     }
 
@@ -29,6 +30,7 @@ class DefaultRequestConverterTest {
         EventInputParams eventInputParams = null;
         DefaultRequestConverter defaultRequestConverter = new DefaultRequestConverter();
         EventInputParams returnedEventInputParams = defaultRequestConverter.convert(eventInputParams);
+        // AssertThat null is returned when null is passed to the method
         assertThat(returnedEventInputParams, is(nullValue()));
     }
 

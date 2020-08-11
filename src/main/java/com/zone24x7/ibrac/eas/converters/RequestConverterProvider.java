@@ -27,7 +27,9 @@ public class RequestConverterProvider {
      * @return the request converter
      */
     public RequestConverter get(String topicName) {
+        // Concatenate the prefix+"."+converter of the converter and store it in converterName
         String converterName = topicConfig.getConfigurations().get(AppConfigStringConstants.CONFIG_TOPIC_PREFIX + "." + topicName + AppConfigStringConstants.CONFIG_TOPIC_CONVERTER);
+        // Return the converterName in the requestConverterMap as the response
         return requestConverterMap.get(converterName);
     }
 }

@@ -22,6 +22,7 @@ public class TopicValidator {
      * @return true if the topic is present, else false.
      */
     public boolean validate(String topic) {
+        // Return whether the topic can be found in the whiteListedTopicsList
         return whiteListedTopicList.contains(topic);
     }
 }

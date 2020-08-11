@@ -27,7 +27,9 @@ public class RequestFormatterProvider {
      * @return the request formatter
      */
     public RequestFormatter get(String topicName) {
+        // Concatenate the prefix+"."+formatter of the formatter and store it in formatterName
         String formatterName = topicConfig.getConfigurations().get(AppConfigStringConstants.CONFIG_TOPIC_PREFIX + "." + topicName + AppConfigStringConstants.CONFIG_TOPIC_FORMATTER);
+        // Return the relevant formatterName stored in the requestFormatterMap.
         return requestFormatterMap.get(formatterName);
     }
 }

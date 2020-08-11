@@ -33,15 +33,22 @@ public class EventRequestHandler implements RequestHandler {
      */
     @Override
     public String handleRequest( EventInputParams eventInputParams) throws IOException {
+        // Get the relevant requestConverter
         RequestConverter requestConverter = requestConverterProvider.get(eventInputParams.getTopic());
+        // Convert the eventInputParams using the requestConverter
         eventInputParams = requestConverter.convert(eventInputParams);
 
+        // Get the relevant requestFormatter
         RequestFormatter requestFormatter = requestFormatterProvider.get(eventInputParams.getTopic());
+        // Format the eventInputParams using the requestFormatter
         eventInputParams = requestFormatter.format(eventInputParams);
 
+        // Get the relevant preProcessor
         PreProcessor preProcessor = preProcessorProvider.get(eventInputParams.getTopic());
+        // Process the eventInputParams using the preProcessor (add the date to the eventData)
         eventInputParams = preProcessor.process(eventInputParams);
 
+        // Return the new eventData with the date appended to the beginning.
         return eventInputParams.getEventData();
     }
 }

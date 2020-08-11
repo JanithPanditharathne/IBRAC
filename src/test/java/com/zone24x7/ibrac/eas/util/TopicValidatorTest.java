@@ -32,6 +32,7 @@ class TopicValidatorTest {
      */
     @Test
     void should_returnTrue_for_methodCallWithExistingTopic() {
+        // AssertThat true is returned for a topic that exists.
         assertThat(topicValidator.validate("rectrack"), is(true));
     }
 
@@ -40,6 +41,7 @@ class TopicValidatorTest {
      */
     @Test
     void should_returnFalse_for_methodCallWithoutAnExistingTopic() {
+        // AssertThat false is returned for a topic that doesn't exists.
         assertThat(topicValidator.validate("abc"), is(false));
     }
 

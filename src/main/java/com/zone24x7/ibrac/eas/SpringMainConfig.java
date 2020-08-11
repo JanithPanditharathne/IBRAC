@@ -29,9 +29,13 @@ public class SpringMainConfig {
     @Bean
     @Qualifier("requestConverterMap")
     public Map<String, RequestConverter> provideRequestConverterMap(DefaultRequestConverter defaultRequestConverter) {
+        // Create a new HashMap
         Map<String, RequestConverter> requestConverterMap = new HashMap<>();
+        // Put the defaultRequestConverter with null as the key
         requestConverterMap.put(null, defaultRequestConverter);
+        // Put the defaultRequestConverter with the DEFAULT_KEY
         requestConverterMap.put(StringConstants.DEFAULT_KEY, defaultRequestConverter);
+        // Return the populated Map of converters
         return requestConverterMap;
     }
 
@@ -44,9 +48,13 @@ public class SpringMainConfig {
     @Bean
     @Qualifier("requestFormatterMap")
     public Map<String, RequestFormatter> provideRequestFormatterMap(DefaultRequestFormatter defaultRequestFormatter) {
+        // Create a new HashMap
         Map<String, RequestFormatter> requestFormatterMap = new HashMap<>();
+        // Put the defaultRequestFormatter with null as the key
         requestFormatterMap.put(null, defaultRequestFormatter);
+        // Put the defaultRequestFormatter with the DEFAULT_KEY
         requestFormatterMap.put(StringConstants.DEFAULT_KEY, defaultRequestFormatter);
+        // Return the populated Map of formatters
         return requestFormatterMap;
     }
 
@@ -59,9 +67,13 @@ public class SpringMainConfig {
     @Bean
     @Qualifier("preProcessorMap")
     public Map<String, PreProcessor> providePreProcessorMap(DefaultPreProcessor defaultPreProcessor) {
+        // Create a new HashMap
         Map<String, PreProcessor> preProcessorMap = new HashMap<>();
+        // Put the defaultPreProcessor with null as the key
         preProcessorMap.put(null, defaultPreProcessor);
+        // Put the defaultPreProcessor with the DEFAULT_KEY
         preProcessorMap.put(StringConstants.DEFAULT_KEY, defaultPreProcessor);
+        // Return the populated Map of preProcessors
         return preProcessorMap;
     }
 
@@ -74,9 +86,12 @@ public class SpringMainConfig {
     @Bean
     @Qualifier("whitelistedTopicList")
     public List<String> provideWhitelistedTopicList(@Value("${eas.whitelisted.topics}") String whitelistedTopicsConfiguration) {
+        // Create a new LinkedList
         List<String> whitelistedTopicList = new LinkedList<>();
 
+        // If the whiteListedTopics found in the properties file is not empty
         if (StringUtils.isNotEmpty(whitelistedTopicsConfiguration)) {
+            // Split the string using commas into individual strings of topics and add it to the linked list.
             whitelistedTopicList.addAll(Arrays.asList(whitelistedTopicsConfiguration.trim().split("\\s*,\\s*")));
         }
 

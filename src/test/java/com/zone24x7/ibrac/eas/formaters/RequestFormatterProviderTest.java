@@ -1,7 +1,6 @@
 package com.zone24x7.ibrac.eas.formaters;
 
 import com.zone24x7.ibrac.eas.TopicConfig;
-
 import com.zone24x7.ibrac.eas.util.AppConfigStringConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,6 +52,7 @@ class RequestFormatterProviderTest {
     @Test
     void should_return_default_formatter_if_topic_name_is_not_in_configurations() {
         RequestFormatter result = requestFormatterProvider.get("topicNameWithoutConfiguration");
+        // AssertThat that the defaultRequestFormatter is returned.
         assertThat(result, is(equalTo(defaultRequestFormatter)));
     }
 
@@ -62,6 +62,7 @@ class RequestFormatterProviderTest {
     @Test
     void should_return_default_formatter_if_topic_name_has_default_formatter() {
         RequestFormatter result = requestFormatterProvider.get("topic1");
+        // AssertThat that the defaultRequestFormatter is returned.
         assertThat(result, is(equalTo(defaultRequestFormatter)));
     }
 
@@ -71,6 +72,7 @@ class RequestFormatterProviderTest {
     @Test
     void should_return_correct_formatter_if_according_to_the_topic_configuration() {
         RequestFormatter result = requestFormatterProvider.get("topic2");
+        // AssertThat that the defaultRequestFormatter is returned.
         assertThat(result, is(equalTo(requestFormatter1)));
     }
 
@@ -80,6 +82,7 @@ class RequestFormatterProviderTest {
     @Test
     void should_return_null_if_a_wrong_formatter_is_mentioned_in_configuration_which_does_not_exist() {
         RequestFormatter result = requestFormatterProvider.get("topic3");
+        // AssertThat that null is returned when a topic that doesnt exist is passed.
         assertThat(result, is(equalTo(null)));
     }
 }

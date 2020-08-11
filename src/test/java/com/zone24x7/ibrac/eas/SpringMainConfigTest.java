@@ -24,6 +24,7 @@ class SpringMainConfigTest {
     void should_return_correctlist_when_passing_validtopics() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         List<String> listOfWhitelistedTopics = springMainConfig.provideWhitelistedTopicList("rectrack,topic1,topic2");
+       // Assert that the method returns a valid list for a valid string with topics.
         assertThat(listOfWhitelistedTopics, equalTo(whiteListedTopicsList));
     }
 
@@ -34,6 +35,7 @@ class SpringMainConfigTest {
     void should_return_list_of_items_without_spaces_when_passing_topics_with_spaces_in_front() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         List<String> listOfWhitelistedTopics = springMainConfig.provideWhitelistedTopicList(" rectrack, topic1, topic2");
+        // AssertThat the method returns a valid list for a valid string with topics that have spaces in the front.
         assertThat(listOfWhitelistedTopics, equalTo(whiteListedTopicsList));
     }
 
@@ -44,6 +46,7 @@ class SpringMainConfigTest {
     void should_return_list_of_items_without_spaces_when_passing_topics_with_spaces_in_back() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         List<String> listOfWhitelistedTopics = springMainConfig.provideWhitelistedTopicList("rectrack ,topic1 ,topic2 ");
+        // AssertThat the method returns a valid list for a valid string with topics that have spaces in the back.
         assertThat(listOfWhitelistedTopics, equalTo(whiteListedTopicsList));
     }
 
@@ -54,6 +57,7 @@ class SpringMainConfigTest {
     void should_return_list_of_items_without_spaces_when_passing_topics_with_spaces_on_both_sides() {
         SpringMainConfig springMainConfig = new SpringMainConfig();
         List<String> listOfWhitelistedTopics = springMainConfig.provideWhitelistedTopicList(" rectrack , topic1 , topic2 ");
+        // AssertThat the method returns a valid list for a valid string with topics that have spaces on both sides.
         assertThat(listOfWhitelistedTopics, equalTo(whiteListedTopicsList));
     }
 
@@ -68,6 +72,7 @@ class SpringMainConfigTest {
         Map<String, RequestConverter> requestConverterMap = new HashMap<>();
         requestConverterMap.put(null, defaultRequestConverter);
         requestConverterMap.put(StringConstants.DEFAULT_KEY, defaultRequestConverter);
+        // AssertThat the method returns the valid hashmap of request converters.
         assertThat(returnedRequestConverterMap, equalTo(requestConverterMap));
     }
 
@@ -82,6 +87,7 @@ class SpringMainConfigTest {
         Map<String, RequestFormatter> requestFormatterMap = new HashMap<>();
         requestFormatterMap.put(null, defaultRequestFormatter);
         requestFormatterMap.put(StringConstants.DEFAULT_KEY, defaultRequestFormatter);
+        // AssertThat the method returns the valid hashmap of request formatters.
         assertThat(returnedRequestConverterMap, equalTo(requestFormatterMap));
     }
 
@@ -96,6 +102,7 @@ class SpringMainConfigTest {
         Map<String, PreProcessor> preProcessorMap = new HashMap<>();
         preProcessorMap.put(null, defaultPreProcessor);
         preProcessorMap.put(StringConstants.DEFAULT_KEY, defaultPreProcessor);
+        // AssertThat the method returns the valid hashmap of pre processors.
         assertThat(returnedPreProcessorMap, equalTo(preProcessorMap));
     }
 }

@@ -17,6 +17,7 @@ public class DefaultRequestFormatter implements RequestFormatter {
      */
     @Override
     public EventInputParams format(EventInputParams eventInputParams) {
+        // Return the eventInputParams after formatting
         return eventInputParams;
     }
 }
