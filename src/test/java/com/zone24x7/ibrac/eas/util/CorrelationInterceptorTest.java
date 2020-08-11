@@ -17,6 +17,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -82,5 +83,6 @@ class CorrelationInterceptorTest {
         when(MDC.get(CORRELATION_ID_MDC_ATTRIBUTE_NAME)).thenReturn(correlationId);
         when(MDC.get(START_DATE_TIME_MDC_ATTRIBUTE_NAME)).thenReturn(correlationId);
         correlationInterceptor.afterCompletion(request,response,handler,new Exception());
+        verify(mdcAdapter).remove(START_DATE_TIME_MDC_ATTRIBUTE_NAME);
     }
 }

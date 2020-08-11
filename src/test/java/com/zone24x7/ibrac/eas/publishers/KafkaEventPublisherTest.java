@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.concurrent.ListenableFuture;
@@ -17,9 +18,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Class to test the Kafka Event Puvlisher.
@@ -80,5 +79,6 @@ class KafkaEventPublisherTest {
 
         kafkaEventPublisher.publishToTopic(eventInputParams);
     }
+
 
 }
